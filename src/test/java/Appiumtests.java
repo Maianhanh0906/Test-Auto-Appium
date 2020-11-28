@@ -1,3 +1,6 @@
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.AppiumDriver;
@@ -10,10 +13,17 @@ public class Appiumtests {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		try {
+			openAppiumtests();
+		}catch(Exception exp) {
+			System.out.println(exp.getCause());
+			System.out.println(exp.getMessage());
+			exp.printStackTrace();
+		}
+				
 	}
 	
-	public static void openAppiumtests() {
+	public static void openAppiumtests() throws Exception {
 		DesiredCapabilities cap = new DesiredCapabilities();
 		
 		cap.setCapability("deviceName", "Maianhtest");
@@ -23,7 +33,11 @@ public class Appiumtests {
 		cap.setCapability("appPackage", "com.blue.hoantran.itro_host");
 		cap.setCapability("appActivity", "com.blue.hoantran.itro_host.ui_v2.login.SelectPurposeActivity");
 		
-		driver = new AppiumDriver<MobileElement>(cap);
+		URL url = new URL("http://127.0.0.1:4723/wd/hub");
+		driver = new AppiumDriver<MobileElement>(url , cap);
+		
+		System.out.println("Application Started");
+		
 		
 		
 	}
